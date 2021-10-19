@@ -5,7 +5,7 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "myrobot");
   ros::NodeHandle n;
   ros::Rate rate(MAIN_RATE);
-  MyRobot robot;
+  MyRobot robot(n, rate);
   while(ros::ok()){
 
 // *********Edit here**********
