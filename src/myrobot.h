@@ -2,18 +2,22 @@
 #include <std_msgs/String.h>
 #include <std_msgs/Empty.h>
 #include <turtlebot3_msgs/SensorState.h>
+#include <turtlebot3_msgs/Sound.h>
 #include <geometry_msgs/Twist.h>
 #include <nav_msgs/Odometry.h>
 
 const double BURGER_MAX_LIN_VEL = 0.22;
 const double BURGER_MAX_ANG_VEL = 2.84;
 const int MAIN_RATE = 10;
+const unsigned char OFF = 0;
+const unsigned char ON = 1;
 
 class MyRobot
 {
     private:
         ros::Publisher pub_vel_;
         ros::Publisher reset_odom_;
+        ros::Publisher pub_sound_;
         ros::Subscriber sensor_state_;
         ros::Subscriber odom_;
         int ls_ = 0;
@@ -52,6 +56,7 @@ class MyRobot
             odom_ = n.subscribe("/odom", 1, &MyRobot::setOdom, this);
             wait(0.3);
             reset();
+            start();
             t_start_= ros::Time::now();
         }
 
@@ -129,8 +134,18 @@ class MyRobot
             return (ros::Time::now() - t_start_).toSec();
         }
 
+        void start()
+        {
+            turtlebot3_msgs::Sound s;
+            s.value = ON;
+            pub_sound_.publish(s);
+        }
+
         void end()
         {
+            turtlebot3_msgs::Sound s;
+            s.value = OFF;
+            pub_sound_.publish(s);
             ros::shutdown();
         }
 };
