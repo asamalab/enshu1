@@ -208,7 +208,7 @@ include_directories(
 
 find_package(OpenCV REQUIRED)
 include_directories(
- ${catkin_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS}
+ ${catkin_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS} include
 )
 add_library(
  ${PROJECT_NAME} src/enshu1.cpp
